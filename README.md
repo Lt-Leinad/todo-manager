@@ -1,169 +1,132 @@
-````markdown
-# Todo Manager (Tauri + React + TypeScript)
+---
+# **Todo Manager (React + Tauri + TypeScript)**
 
-A lightweight, cross-platform **desktop Todo Manager** built using **Tauri**, **React**, and **TypeScript**.  
-The application allows users to **add, edit, delete, and filter tasks** by due date and priority.  
-All tasks are stored locally in a `tasks.json` file using the Tauri filesystem API for persistence.
+A lightweight cross-platform desktop task manager built with **React**, **TypeScript**, and **Tauri**.
+The app supports **CRUD operations, filters, data persistence**, and a **modern responsive UI**.
+---
+
+## **Features**
+
+- **Clean & responsive design** for desktop, tablet, and mobile.
+- **Two views/screens** – Add Task & Task List.
+- **Loading states** for async operations.
+- **Error handling** with user-friendly messages.
+- **CRUD operations** (Create, Read, Update, Delete) for tasks.
+- **Data persistence** using Tauri's `@tauri-apps/plugin-fs` in local storage.
+- **Unit tests** for core logic (e.g., adding tasks).
+- **Cross-platform build** (macOS, Windows, Linux).
 
 ---
 
-## **1. Application Description**
+## **Setup Instructions**
 
-The **Todo Manager** is designed to showcase:
+### **1. Install Tauri CLI**
 
-- A clean, responsive UI for managing tasks.
-- Core **CRUD functionality** (Create, Read, Update, Delete).
-- Data persistence across app restarts.
-- A modern, lightweight desktop app using **Tauri** (smaller and faster than Electron).
+```bash
+sudo npm install -g @tauri-apps/cli
+```
 
----
-
-## **2. Setup Instructions**
-
-### **Prerequisites**
-
-Make sure you have the following installed:
-
-- **Node.js** (v18 or higher recommended)
-- **npm** (comes with Node)
-- **Rust** (Tauri requires Rust for building the backend)
-  ```bash
-  curl https://sh.rustup.rs -sSf | sh
-  ```
-````
-
-- **Tauri CLI**
-
-  ```bash
-  sudo npm install -g @tauri-apps/cli
-  ```
-
----
-
-### **Clone the Repository**
+### **2. Clone the Repository**
 
 ```bash
 git clone https://github.com/<your-username>/todo-manager.git
 cd todo-manager
 ```
 
----
-
-### **Install Dependencies**
+### **3. Install Dependencies**
 
 ```bash
 npm install
 ```
 
----
-
-### **Run in Development**
+### **4. Run in Development**
 
 ```bash
 npm run tauri dev
 ```
 
-This will start the Vite dev server and open the desktop application.
+This starts the Vite dev server and launches the desktop app.
 
 ---
 
-## **3. Build Instructions**
+## **Build Instructions**
 
-To build a production-ready executable for your platform:
+To create a production-ready desktop app:
 
 ```bash
 npm run tauri build
 ```
 
-- For **macOS**, the `.app` file will be created under `src-tauri/target/release/bundle/macos/`.
-- For **Windows**, an `.exe` will be generated under `src-tauri/target/release/bundle/msi/`.
-- For **Linux**, the `.AppImage` or `.deb` files will be under `src-tauri/target/release/bundle/linux/`.
+This will generate the app bundle:
+
+- **macOS:** `src-tauri/target/release/bundle/macos/TodoManager.app`
+- **Windows:** `src-tauri/target/release/bundle/msi/TodoManager.msi`
+- **Linux:** `src-tauri/target/release/bundle/deb/todo-manager.deb`
 
 ---
 
-## **4. Architecture Decisions**
+## **Installation Steps**
 
-### **Frontend (React + TypeScript)**
+### **macOS:**
 
-- **React** is used for building a modular, component-based UI.
-- **TypeScript** ensures type safety and prevents runtime errors.
-- **Vite** is used as a fast bundler and dev server.
+1. After the build, open `src-tauri/target/release/bundle/macos/`.
+2. Double-click `TodoManager.app` to launch.
+3. If you get a **“App is from an unidentified developer”** warning:
 
-### **Backend (Tauri + Rust)**
+   - Go to **System Preferences > Security & Privacy > Open Anyway**.
 
-- Tauri manages the native desktop window and OS-level APIs (file system).
-- We use `@tauri-apps/plugin-fs` to read and write the `tasks.json` file inside the **LocalData** directory.
+### **Windows:**
 
-### **Data Flow**
+1. Locate `src-tauri/target/release/bundle/msi/TodoManager.msi`.
+2. Double-click to run the installer.
 
-- **`App.tsx`** manages tasks with React state (`useState` + `useEffect`).
-- **`storage.ts`** abstracts all file operations:
+### **Linux:**
 
-  - `loadTasks()` → Reads `tasks.json`.
-  - `saveTasks()` → Writes to `tasks.json`.
+1. Locate `src-tauri/target/release/bundle/deb/todo-manager.deb`.
+2. Install with:
 
-- The frontend interacts with the filesystem via Tauri APIs.
-
----
-
-## **5. Known Limitations**
-
-- Tasks are stored **locally** only (no cloud sync).
-- Deleting `tasks.json` will remove all tasks permanently.
-- The UI is optimized for basic desktop and mobile responsiveness but could be improved with a dedicated design system.
+   ```bash
+   sudo dpkg -i todo-manager.deb
+   ```
 
 ---
 
-## **6. API Documentation**
+## **Running Unit Tests**
 
-### **Main Modules**
+We use **Jest** with **ts-jest**.
 
-#### **`storage.ts`**
-
-- **`loadTasks(): Promise<Task[]>`**
-  Reads tasks from the `tasks.json` file (creates an empty file if it doesn't exist).
-
-- **`saveTasks(tasks: Task[]): Promise<void>`**
-  Saves the given array of tasks into the `tasks.json` file.
-
----
-
-## **7. Executable**
-
-### **Building the App**
-
-Run:
+### **Run Tests**
 
 ```bash
-npm run tauri build
+npm test
 ```
 
-- The executable (for your OS) will appear under:
+### **Test Files**
 
-  ```
-  src-tauri/target/release/bundle/
-  ```
-
-### **Installation Instructions**
-
-- **macOS:** Open the `.dmg` or `.app` file in Finder and drag it to Applications.
-- **Windows:** Run the `.exe` or `.msi` installer.
-- **Linux:** Run the `.AppImage` file or install the `.deb`/`.rpm` package.
+All test files are located in `src/__tests__/`.
+We have included tests for CRUD operations (e.g., `addTask`).
 
 ---
 
-## **8. Environment File (if needed)**
+## **Architecture Decisions**
 
-No environment variables are required for this application.
-All data is stored locally in `tasks.json` using Tauri's LocalData directory.
+- **Tauri** chosen for lightweight desktop builds using system WebView.
+- **React + TypeScript** for component-based, strongly-typed UI.
+- **@tauri-apps/plugin-fs** for data persistence via JSON (`tasks.json`).
+- **CSS** (no frameworks) for full control over responsive design.
+
+---
+
+## **Known Limitations**
+
+- Tasks are stored **locally only** (no cloud sync).
+- No multi-user support.
+- Simple filters (priority & due date).
 
 ---
 
 ## **License**
 
-This project is for educational purposes.
-
-```
+This project is for **educational purposes**.
 
 ---
-```

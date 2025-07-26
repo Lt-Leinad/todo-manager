@@ -1,211 +1,290 @@
-/* ===== General ===== */
-body {
-  margin: 0;
-  font-family: 'Inter', 'Roboto', sans-serif;
-  background: #f0f2f5;
-  color: #333;
-}
-
-h1.app-title {
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 20px;
-  color: #4f46e5;
-}
-
-.app-container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-/* ===== Standardized Inputs & Buttons ===== */
-input,
-select,
-button {
-  height: 42px;
-  padding: 10px 12px;
-  border-radius: 6px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-input[type="text"],
-input[type="date"] {
-  cursor: text;
-}
-
-/* Dropdown styling (reverted) */
-select {
-  appearance: none;
-  background-color: #f9fafb;
-  color: #333;
-  font-weight: 500;
-  text-transform: capitalize;
-  padding-right: 35px;
-  background-image: url("data:image/svg+xml,%3Csvg%20width%3D'16'%20height%3D'16'%20fill%3D'%23333'%20xmlns%3D'http://www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M4%206l4%204%204-4z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 12px;
-}
-
-select:focus {
-  border-color: #4f46e5;
-  outline: none;
-}
-
-/* ===== Add Task Form ===== */
-.task-form {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.task-form > * {
-  flex: 1;
-}
-
-/* Add Task Button */
-.add-task {
-  background: #3b82f6; /* Blue background */
-  color: white;        /* White text */
-  border: none;
-}
-
-.add-task:hover {
-  background: #2563eb; /* Darker blue on hover */
-}
-
-/* ===== Filters ===== */
-.filters {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.filters label {
-  font-weight: 500;
-}
-
-/* Date filter row (Clear button inline) */
-.date-filter-row {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* Space between input and Clear button */
-}
-
-.clear-date {
-  background: #ef4444;
-  color: white;
-  border-radius: 4px;
-  padding: 0 12px;
-  font-size: 14px;
-  height: 42px;
-}
-
-.clear-date:hover {
-  background: #dc2626;
-}
-
-/* ===== Buttons ===== */
-button.save,
-.task-actions .edit {
-  background: #3b82f6;
-  color: white;
-}
-
-button.cancel,
-.task-actions .delete {
-  background: #ef4444;
-  color: white;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-/* ===== Task List ===== */
-.task-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fafafa;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid #eee;
-}
-
-.task-info .task-title {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin: 0;
-}
-
-.task-info .task-meta {
-  font-size: 0.9rem;
-  color: #666;
-  text-transform: capitalize;
-}
-
-/* Priority Colors */
-.task-item.priority-high {
-  border-left: 5px solid #ef4444;
-}
-.task-item.priority-medium {
-  border-left: 5px solid #f59e0b;
-}
-.task-item.priority-low {
-  border-left: 5px solid #10b981;
-}
-
-/* ===== Editing Section ===== */
-.task-editing {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  width: 100%;
-}
-
-.edit-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.task-actions {
-  display: flex;
-  gap: 20px; /* More space between Edit and Delete */
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .task-form,
-  .filters {
-    flex-direction: column;
-    width: 100%;
+/* ===========================
+   Global Styles
+   =========================== */
+   body {
+    margin: 0;
+    font-family: 'Inter', 'Roboto', sans-serif;
+    background: #f0f2f5; /* Light gray background for contrast */
+    color: #333;         /* Default text color */
   }
-
+  
+  h1.app-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #4f46e5; /* Primary accent color (purple) */
+  }
+  
+  .app-container {
+    max-width: 900px;
+    height: calc(100vh - 80px); /* Full viewport height with margin offset */
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    display: flex;
+    flex-direction: column; /* Vertical stacking of children */
+  }
+  
+  /* ===========================
+     Loading State
+     =========================== */
+  .loading {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #4f46e5;
+    padding: 50px 0;
+  }
+  
+  /* ===========================
+     Navigation Buttons
+     =========================== */
+  .nav-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .nav-buttons button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .nav-buttons button:hover {
+    background: #2563eb;
+  }
+  
+  /* ===========================
+     Input and Button Styling
+     =========================== */
   input,
   select,
   button {
-    width: 100%;
+    height: 42px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    cursor: pointer;
   }
-
-  .task-actions {
-    width: 100%;
+  
+  input[type="text"],
+  input[type="date"] {
+    cursor: text;
+  }
+  
+  /* ===========================
+     Dropdown Styling
+     =========================== */
+  select {
+    appearance: none;        /* Remove default browser styles */
+    background-color: #f9fafb;
+    color: #333;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding-right: 35px;
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D'16'%20height%3D'16'%20fill%3D'%23333'%20xmlns%3D'http://www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M4%206l4%204%204-4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+  }
+  
+  select:focus {
+    border-color: #4f46e5; /* Highlight dropdown when focused */
+    outline: none;
+  }
+  
+  /* ===========================
+     Add Task Form
+     =========================== */
+  .task-form {
+    display: flex;
+    gap: 12px;          /* Spacing between form elements */
+    margin-bottom: 20px;
+  }
+  
+  .task-form > * {
+    flex: 1;            /* Make form elements share equal space */
+  }
+  
+  .add-task {
+    background: #3b82f6; /* Blue primary button */
+    color: white;
+    border: none;
+  }
+  
+  .add-task:hover {
+    background: #2563eb; /* Darker blue on hover */
+  }
+  
+  /* ===========================
+     Filter Section
+     =========================== */
+  .filters {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  }
+  
+  .filters label {
+    font-weight: 500;
+  }
+  
+  .date-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .clear-date {
+    background: #ef4444; /* Red button for clearing */
+    color: white;
+    border-radius: 4px;
+    padding: 0 12px;
+    font-size: 14px;
+    height: 42px;
+  }
+  
+  .clear-date:hover {
+    background: #dc2626; /* Darker red on hover */
+  }
+  
+  /* ===========================
+     Button Variants
+     =========================== */
+  button.save,
+  .task-actions .edit {
+    background: #3b82f6; /* Blue for save/edit */
+    color: white;
+  }
+  
+  button.cancel,
+  .task-actions .delete {
+    background: #ef4444; /* Red for cancel/delete */
+    color: white;
+  }
+  
+  button:hover {
+    opacity: 0.9; /* Slight fade on hover for feedback */
+  }
+  
+  /* ===========================
+     Task List
+     =========================== */
+  .task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;         /* Scrollable if content exceeds height */
+    flex: 1;                  /* Take up remaining vertical space */
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+  
+  .task-item {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
   }
-}
+  
+  .task-info .task-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .task-info .task-meta {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: capitalize;
+  }
+  
+  /* Priority color indicators */
+  .task-item.priority-high {
+    border-left: 5px solid #ef4444;
+  }
+  .task-item.priority-medium {
+    border-left: 5px solid #f59e0b;
+  }
+  .task-item.priority-low {
+    border-left: 5px solid #10b981;
+  }
+  
+  /* ===========================
+     Task Editing Section
+     =========================== */
+  .task-editing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .edit-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .task-actions {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* ===========================
+     Responsive Design
+     =========================== */
+  @media (max-width: 768px) {
+    .task-form,
+    .filters {
+      flex-direction: column; /* Stack vertically */
+      width: 100%;
+    }
+  
+    input,
+    select,
+    button {
+      width: 100%;           /* Full-width controls for mobile */
+    }
+  
+    .task-actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+  
+    .nav-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+  
+  /* ===========================
+     Error Message
+     =========================== */
+  .error-message {
+    color: #ff4d4f;            /* Bright red text */
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 10px 0;
+    background-color: #ffe6e6; /* Light red background */
+    padding: 8px 12px;
+    border: 1px solid #ffb3b3;
+    border-radius: 5px;
+  }
+  
