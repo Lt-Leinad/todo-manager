@@ -108,6 +108,42 @@ We have included tests for CRUD operations (e.g., `addTask`).
 
 ---
 
+## **API Documentation**
+
+### **1. storage.ts**
+
+Handles **data persistence** for tasks.
+
+- **`loadTasks(): Promise<Task[]>`**
+  Loads tasks from `tasks.json` using `@tauri-apps/plugin-fs`.
+  Creates the file if it doesn’t exist.
+
+- **`saveTasks(tasks: Task[]): Promise<void>`**
+  Saves an array of tasks to `tasks.json` (overwrites previous content).
+
+---
+
+### **2. App.tsx**
+
+Main React component for **UI & CRUD logic**.
+
+- **State Hooks:**
+
+  - `tasks` – The task list (loaded from storage).
+  - `errorMessage` – Validation and persistence errors.
+  - `loading` – Displays loading spinner while tasks are loading.
+  - `currentView` – Switches between **Task List** and **Add Task** views.
+
+- **Key Functions:**
+
+  - `addTask()` – Adds a new task after validation.
+  - `deleteTask(id: string)` – Removes a task.
+  - `startEditing(task: Task)` – Puts a task in edit mode.
+  - `saveEdit(id: string)` – Saves edits made to a task.
+  - `cancelEdit()` – Cancels editing mode.
+
+---
+
 ## **Architecture Decisions**
 
 - **Tauri** chosen for lightweight desktop builds using system WebView.
