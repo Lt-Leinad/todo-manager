@@ -1,7 +1,3 @@
-Here’s your **final `README.md`** with all the required sections, including **application description, setup instructions, build instructions, architecture decisions, known limitations, API documentation, and executable instructions**:
-
----
-
 ````markdown
 # Todo Manager (Tauri + React + TypeScript)
 
@@ -170,7 +166,4 @@ This project is for educational purposes.
 ```
 
 ---
-
-### **Next Step**
-Would you like me to **create a separate `API.md` file** that documents the structure of the `Task` object (with examples of add/edit/delete operations) to make your submission even more professional?
 ```
