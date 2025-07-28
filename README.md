@@ -29,7 +29,7 @@ sudo npm install -g @tauri-apps/cli
 ### **2. Clone the Repository**
 
 ```bash
-git clone https://github.com/<your-username>/todo-manager.git
+git clone https://github.com/dfed714/todo-manager.git
 cd todo-manager
 ```
 
